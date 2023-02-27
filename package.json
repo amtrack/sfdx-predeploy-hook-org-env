@@ -1,28 +1,19 @@
 {
-  "name": "sample-plugin",
+  "name": "sfdx-plugin-org-env-hook",
   "version": "0.0.0-development",
-  "description": "Plug-in that contains custom hooks.",
+  "description": "sfdx plugin to export target org details as environment variables",
   "license": "MIT",
   "files": [
     "/hooks",
     "/oclif.manifest.json"
   ],
-  "scripts": {
-    "build": "oclif manifest",
-    "prepack": "oclif manifest",
-    "prepare": "oclif manifest"
-  },
   "oclif": {
     "bin": "sfdx",
-    "commands": "./commands",
     "hooks": {
-      "predeploy": "./hooks/username.mjs"
+      "predeploy": "./hook.mjs"
     }
   },
   "dependencies": {
     "@salesforce/sf-plugins-core": "2.2.3"
-  },
-  "devDependencies": {
-    "oclif": "3.7.0"
   }
 }
