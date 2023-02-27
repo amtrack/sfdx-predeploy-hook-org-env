@@ -1,4 +1,29 @@
 {
   "version": "0.0.0-development",
-  "commands": {}
+  "commands": {
+    "username": {
+      "id": "username",
+      "strict": false,
+      "pluginName": "sample-plugin",
+      "pluginAlias": "sample-plugin",
+      "pluginType": "core",
+      "aliases": [],
+      "flags": {
+        "target-org": {
+          "name": "target-org",
+          "type": "option",
+          "char": "o",
+          "summary": "Username or alias of the target org.",
+          "required": true,
+          "multiple": false,
+          "aliases": [
+            "targetusername",
+            "u"
+          ]
+        }
+      },
+      "args": {},
+      "hasDynamicHelp": true
+    }
+  }
 }
