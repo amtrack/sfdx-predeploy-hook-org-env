@@ -1,0 +1,34 @@
+{
+  "name": "sfdx-predeploy-hook-org-env",
+  "version": "0.0.0-development",
+  "description": "sfdx predeploy hook to export target org details as environment variables",
+  "license": "MIT",
+  "files": [
+    "/src",
+    "/oclif.manifest.json"
+  ],
+  "oclif": {
+    "bin": "sfdx",
+    "hooks": {
+      "predeploy": "./src/hook.mjs"
+    }
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "@oclif/core": "2.x",
+    "@salesforce/core": "3.x"
+  },
+  "devDependencies": {
+    "@oclif/core": "2.6.2",
+    "@salesforce/core": "3.34.6"
+  },
+  "scripts": {
+    "test:e2e": "bash scripts/test-e2e.sh"
+  },
+  "keywords": [
+    "sfdx",
+    "sfdx-plugin",
+    "sfdx-hook",
+    "hook"
+  ]
+}

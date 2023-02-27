@@ -1,0 +1,18 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "57.0",
+  "replacements": [
+    {
+      "filename": "force-app/main/default/staticresources/Dummy.txt",
+      "stringToReplace": "john.doe@example.com",
+      "replaceWithEnv": "SFDX_TARGET_ORG_USERNAME"
+    }
+  ]
+}
