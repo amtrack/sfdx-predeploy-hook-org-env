@@ -6,10 +6,13 @@ This is useful for [Metadata String Replacements](https://developer.salesforce.c
 
 Currently supported environment variables:
 
-| Environment Variable         | Description                         |
-| ---------------------------- | ----------------------------------- |
-| `SFDX_TARGET_ORG_USERNAME`   | The username of the target org user |
-| `SFDX_TARGET_ORG_USER_EMAIL` | The email of the target org user    |
+| Environment Variable             | Description                           |
+| -------------------------------- | ------------------------------------- |
+| `SFDX_TARGET_ORG_USERNAME`       | The username of the target org user   |
+| `SFDX_TARGET_ORG_USER_EMAIL`     | The email of the target org user      |
+| `SFDX_TARGET_ORG_USER_FIRSTNAME` | The first name of the target org user |
+| `SFDX_TARGET_ORG_USER_LASTTNAME` | The last name of the target org user  |
+| `SFDX_TARGET_ORG_USER_ID`        | The id of the target org user         |
 
 ## Example
 

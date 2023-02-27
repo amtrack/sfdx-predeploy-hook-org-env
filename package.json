@@ -4,13 +4,13 @@
   "description": "sfdx plugin to export target org details as environment variables",
   "license": "MIT",
   "files": [
-    "/hooks",
+    "/src",
     "/oclif.manifest.json"
   ],
   "oclif": {
     "bin": "sfdx",
     "hooks": {
-      "predeploy": "./hook.mjs"
+      "predeploy": "./src/hook.mjs"
     }
   },
   "dependencies": {
