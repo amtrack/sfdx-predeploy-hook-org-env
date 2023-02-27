@@ -13,7 +13,9 @@
       "predeploy": "./src/hook.mjs"
     }
   },
-  "dependencies": {
-    "@salesforce/sf-plugins-core": "2.2.3"
+  "dependencies": {},
+  "devDependencies": {
+    "@oclif/core": "^2.3.1",
+    "@salesforce/core": "^3.33.5"
   }
 }
