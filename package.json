@@ -14,8 +14,12 @@
     }
   },
   "dependencies": {},
+  "peerDependencies": {
+    "@oclif/core": "2.x",
+    "@salesforce/core": "3.x"
+  },
   "devDependencies": {
-    "@oclif/core": "^2.3.1",
-    "@salesforce/core": "^3.33.5"
+    "@oclif/core": "2.6.2",
+    "@salesforce/core": "3.33.6"
   }
 }
