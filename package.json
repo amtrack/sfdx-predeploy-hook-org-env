@@ -19,7 +19,7 @@
     "@salesforce/core": "3.x"
   },
   "devDependencies": {
-    "@oclif/core": "2.6.2",
+    "@oclif/core": "2.8.0",
     "@salesforce/core": "3.34.6"
   }
 }
