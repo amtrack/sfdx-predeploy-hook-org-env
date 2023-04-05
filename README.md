@@ -2,9 +2,53 @@
 
 > sfdx predeploy hook to export target org details as environment variables
 
-This is useful for [Metadata String Replacements](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_string_replace.htm) before pushing/deploying to an org (especially Scratch Orgs).
+## Use Case
 
-Currently supported environment variables:
+Example:
+When deploying Metadata of type `Portal` you'll need to provide an `<admin>` which is a username in the org.
+The [Metadata String Replacements](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_string_replace.htm) feature already supports replacing strings with values stored in a file or in an environment variable.
+
+`sfdx-project.json`
+
+```json
+{
+  ...
+  "replacements": [
+    {
+      "filename": "force-app/main/default/portals/Customer Portal.portal-meta.xml",
+      "regexToReplace": "<admin>.*</admin>",
+      "replaceWithEnv": "ORG_USERNAME"
+    }
+  ]
+}
+```
+
+Let's assume that for a Scratch Org we create, we simply want to make the default scratch org user the admin of the portal.
+
+So in this example, we'll set the environment variable `ORG_USERNAME`, but first we need to get the default scratch org username from the org:
+
+```console
+export ORG_USERNAME="$(node -pe 'JSON.parse(fs.readFileSync(0, "utf8")).result.username' < <(sfdx force:org:display -u my-target-org --json))"
+sfdx force source deploy -p "force-app/main/default/portals/Customer Portal.portal-meta.xml" -u my-target-org
+```
+
+Although this works just fine, we need to remember to set this environment variable before deploying or pushing.
+
+> **Note**
+>
+> For common things like username, email address, org id, it would be handy to have these environment variables with target specific values built-in.
+>
+> And this is exactly what this sfdx plugin does!
+
+## Installation
+
+```console
+sfdx plugins install sfdx-predeploy-hook-org-env
+```
+
+## Usage
+
+Once you've installed this sfdx plugin, you can immediately use the following environment variables mentioned for the Metadata String Replacements:
 
 | Environment Variable               | Description                             | Example              |
 | ---------------------------------- | --------------------------------------- | -------------------- |
@@ -18,21 +62,15 @@ Currently supported environment variables:
 
 > **Note**
 >
-> This is a minimalistic sfdx plugin.
+> Do you have ideas for other target specific values which could be useful?
 >
-> Ideally sfdx supports dynamic Metadata String Replacements with custom Bash/Node.js scripts in the future.
+> Please get in touch by creating an issue.
 
-## Installation
+**Example:**
 
-```console
-sfdx plugins install sfdx-predeploy-hook-org-env
-```
+Make sure your `sfdx-project.json` contains some `replacements` using one of the environment variables listed above.
 
-## Usage
-
-Make sure your `sfdx-project.json` contains some `replacements`.
-
-Example:
+`sfdx-project.json`:
 
 ```json
 {
@@ -42,25 +80,33 @@ Example:
       "default": true
     }
   ],
-  "sourceApiVersion": "57.0",
   "replacements": [
     {
-      "filename": "*.portal-meta.xml",
-      "stringToReplace": "john.doe@example.com",
+      "filename": "force-app/main/default/portals/Customer Portal.portal-meta.xml",
+      "regexToReplace": "<admin>.*</admin>",
       "replaceWithEnv": "SFDX_TARGET_ORG_USERNAME"
     },
     {
-      "filename": "*.portal-meta.xml",
-      "stringToReplace": "john.doe@gmail.com",
+      "filename": "force-app/main/default/portals/Customer Portal.portal-meta.xml",
+      "regexToReplace": "<emailSenderAddress>.*</emailSenderAddress>",
       "replaceWithEnv": "SFDX_TARGET_ORG_USER_EMAIL"
     }
-  ]
+  ],
+  "sourceApiVersion": "57.0"
 }
 ```
 
-To preview the environment variables,
-set the environment variable `DEBUG=sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy`
-and perform a validation deployment to the target org.
+Now you can run `sfdx force source push` or `sfdx force source deploy` and the Metadata replacement will automatically use the dynamically generated environment variables for the given target org:
+
+```console
+sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org1
+sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org2
+sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org3
+```
+
+## Debugging
+
+To preview the environment variables, set the environment variable `DEBUG` to `sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy` and perform a **validation deployment** to the target org.
 
 **Example**
 
