@@ -16,7 +16,7 @@ The [Metadata String Replacements](https://developer.salesforce.com/docs/atlas.e
   "replacements": [
     {
       "filename": "force-app/main/default/portals/Customer Portal.portal-meta.xml",
-      "regexToReplace": "<admin>.*</admin>",
+      "stringToReplace": "admin@example.com",
       "replaceWithEnv": "ORG_USERNAME"
     }
   ]
@@ -83,12 +83,12 @@ Make sure your `sfdx-project.json` contains some `replacements` using one of the
   "replacements": [
     {
       "filename": "force-app/main/default/portals/Customer Portal.portal-meta.xml",
-      "regexToReplace": "<admin>.*</admin>",
+      "stringToReplace": "admin@example.com",
       "replaceWithEnv": "SFDX_TARGET_ORG_USERNAME"
     },
     {
       "filename": "force-app/main/default/portals/Customer Portal.portal-meta.xml",
-      "regexToReplace": "<emailSenderAddress>.*</emailSenderAddress>",
+      "stringToReplace": "admin@gmail.com",
       "replaceWithEnv": "SFDX_TARGET_ORG_USER_EMAIL"
     }
   ],
