@@ -3,6 +3,7 @@
   "version": "0.0.0-development",
   "description": "sfdx predeploy hook to export target org details as environment variables",
   "license": "MIT",
+  "repository": "amtrack/sfdx-predeploy-hook-org-env",
   "files": [
     "/src",
     "/oclif.manifest.json"
