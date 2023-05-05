@@ -20,7 +20,7 @@
     "@salesforce/core": "3.x"
   },
   "devDependencies": {
-    "@oclif/core": "2.8.2",
+    "@oclif/core": "2.8.5",
     "@salesforce/core": "3.34.8"
   },
   "scripts": {
