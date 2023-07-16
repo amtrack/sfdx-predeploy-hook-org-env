@@ -17,11 +17,11 @@
   "dependencies": {},
   "peerDependencies": {
     "@oclif/core": "2.x",
-    "@salesforce/core": "3.x"
+    "@salesforce/core": "3.x || 4.x"
   },
   "devDependencies": {
     "@oclif/core": "2.8.5",
-    "@salesforce/core": "3.36.1"
+    "@salesforce/core": "4.3.11"
   },
   "scripts": {
     "test:e2e": "bash scripts/test-e2e.sh"
