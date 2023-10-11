@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@oclif/core": "3.0.5",
-    "@salesforce/core": "3.36.1"
+    "@salesforce/core": "3.36.2"
   },
   "scripts": {
     "test:e2e": "bash scripts/test-e2e.sh"
