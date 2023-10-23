@@ -2,6 +2,12 @@
 
 > sfdx predeploy hook to export target org details as environment variables
 
+> [!IMPORTANT]
+>
+> This plugin currently only works with `sfdx force:source:push` and `sfdx force:source:deploy`.
+>
+> The `sf project deploy start` command does not (yet) emit the `predeploy` hook.
+
 ## Use Case
 
 Example:
