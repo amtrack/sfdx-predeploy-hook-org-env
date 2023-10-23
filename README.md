@@ -106,20 +106,20 @@ sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org3
 
 ## Debugging
 
-To preview the environment variables, set the environment variable `DEBUG` to `sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy` and perform a **validation deployment** to the target org.
+To preview the environment variables, set the environment variable `DEBUG` to `*:sfdx-predeploy-hook-org-env:*` and perform a **validation deployment** to the target org.
 
 **Example**
 
 MacOS/Linux:
 
 ```console
-$ DEBUG=sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy sfdx force source deploy --checkonly -u mytargetorg -p force-app
+$ DEBUG="*:sfdx-predeploy-hook-org-env:*" sfdx force source deploy --checkonly -u mytargetorg -p force-app
 ```
 
 Windows PowerShell:
 
 ```powershell
-$env:DEBUG=sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy
+$env:DEBUG="*:sfdx-predeploy-hook-org-env:*"
 sfdx force source deploy --checkonly -u mytargetorg -p force-app
 ```
 
