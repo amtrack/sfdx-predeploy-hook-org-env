@@ -28,8 +28,8 @@ Let's assume that for a Scratch Org we create, we simply want to make the defaul
 So in this example, we'll set the environment variable `ORG_USERNAME`, but first we need to get the default scratch org username from the org:
 
 ```console
-export ORG_USERNAME="$(node -pe 'JSON.parse(fs.readFileSync(0, "utf8")).result.username' < <(sfdx force:org:display -u my-target-org --json))"
-sfdx force source deploy -p "force-app/main/default/portals/Customer Portal.portal-meta.xml" -u my-target-org
+export ORG_USERNAME="$(node -pe 'JSON.parse(fs.readFileSync(0, "utf8")).result.username' < <(sf org display -o my-target-org --json))"
+sf project deploy start -p "force-app/main/default/portals/Customer Portal.portal-meta.xml" -o my-target-org
 ```
 
 Although this works just fine, we need to remember to set this environment variable before deploying or pushing.
@@ -43,7 +43,7 @@ Although this works just fine, we need to remember to set this environment varia
 ## Installation
 
 ```console
-sfdx plugins install sfdx-predeploy-hook-org-env
+sf plugins install sfdx-predeploy-hook-org-env
 ```
 
 ## Usage
@@ -96,44 +96,44 @@ Make sure your `sfdx-project.json` contains some `replacements` using one of the
 }
 ```
 
-Now you can run `sfdx force source push` or `sfdx force source deploy` and the Metadata replacement will automatically use the dynamically generated environment variables for the given target org:
+Now you can run `sfdx force source push` or `sf project deploy start` and the Metadata replacement will automatically use the dynamically generated environment variables for the given target org:
 
 ```console
-sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org1
-sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org2
-sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org3
+sf project deploy start -m "Portal:Customer Portal" -o my-target-org1
+sf project deploy start -m "Portal:Customer Portal" -o my-target-org2
+sf project deploy start -m "Portal:Customer Portal" -o my-target-org3
 ```
 
 ## Debugging
 
-To preview the environment variables, set the environment variable `DEBUG` to `sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy` and perform a **validation deployment** to the target org.
+To preview the environment variables, set the environment variable `DEBUG` to `sf:sfdx-predeploy-hook-org-env:hooks:predeploy` and perform a **validation deployment** to the target org.
 
 **Example**
 
 MacOS/Linux:
 
 ```console
-$ DEBUG=sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy sfdx force source deploy --checkonly -u mytargetorg -p force-app
+$ DEBUG="sf:sfdx-predeploy-hook-org-env:hooks:predeploy" sf project deploy start --dry-run -o mytargetorg -d force-app
 ```
 
 Windows PowerShell:
 
 ```powershell
-$env:DEBUG=sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy
-sfdx force source deploy --checkonly -u mytargetorg -p force-app
+$env:DEBUG="sf:sfdx-predeploy-hook-org-env:hooks:predeploy"
+sf project deploy start --dry-run -o mytargetorg -d force-app
 ```
 
 This will output something like:
 
 ```
 ...
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy Setting environment variables for target org +2s
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_ID="00D7g0000006RKmEAM"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USERNAME="john.doe@example.com"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_ID="0058F000002RfcKQAS"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_EMAIL="john.doe@gmail.com"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_FIRSTNAME="John"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_LASTNAME="Doe"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_DISPLAYNAME="John Doe" +0ms
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy Setting environment variables for target org +2s
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_ID="00D7g0000006RKmEAM"
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USERNAME="john.doe@example.com"
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_ID="0058F000002RfcKQAS"
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_EMAIL="john.doe@gmail.com"
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_FIRSTNAME="John"
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_LASTNAME="Doe"
+sf:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_DISPLAYNAME="John Doe" +0ms
 ...
 ```
