@@ -15,7 +15,7 @@
     }
   },
   "dependencies": {
-    "@salesforce/sf-plugins-core": "12.0.8"
+    "@salesforce/sf-plugins-core": "12.0.9"
   },
   "scripts": {
     "test:e2e": "bash scripts/test-e2e.sh"
