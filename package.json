@@ -1,7 +1,7 @@
 {
   "name": "sfdx-predeploy-hook-org-env",
   "version": "0.0.0-development",
-  "description": "sfdx predeploy hook to export target org details as environment variables",
+  "description": "sf predeploy hook to export target org details as environment variables",
   "license": "MIT",
   "repository": "amtrack/sfdx-predeploy-hook-org-env",
   "files": [
@@ -9,9 +9,9 @@
     "/oclif.manifest.json"
   ],
   "oclif": {
-    "bin": "sfdx",
+    "bin": "sf",
     "hooks": {
-      "predeploy": "./src/hook.mjs"
+      "prerun": "./src/hook.mjs"
     }
   },
   "dependencies": {
@@ -23,6 +23,7 @@
   "keywords": [
     "sfdx",
     "sfdx-plugin",
+    "sf-plugin",
     "sfdx-hook",
     "hook"
   ]

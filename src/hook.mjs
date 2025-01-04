@@ -1,6 +1,15 @@
 import { getTargetOrgFromHook } from "./target-org.mjs";
 
+const SUPPORTED_COMMANDS = [
+  "project:deploy:start",
+  "force:source:deploy",
+  "force:source:push",
+];
+
 export async function hook(options) {
+  if (!SUPPORTED_COMMANDS.includes(options?.Command?.id)) {
+    return;
+  }
   const org = await getTargetOrgFromHook(options);
   const identity = await org.getConnection().identity();
   const env = {
