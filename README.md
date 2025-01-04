@@ -1,12 +1,6 @@
 # sfdx-predeploy-hook-org-env
 
-> sfdx predeploy hook to export target org details as environment variables
-
-> [!IMPORTANT]
->
-> This plugin currently only works with `sfdx force:source:push` and `sfdx force:source:deploy`.
->
-> The `sf project deploy start` command does not (yet) emit the `predeploy` hook.
+> sf predeploy hook to export target org details as environment variables
 
 ## Use Case
 
@@ -34,8 +28,8 @@ Let's assume that for a Scratch Org we create, we simply want to make the defaul
 So in this example, we'll set the environment variable `ORG_USERNAME`, but first we need to get the default scratch org username from the org:
 
 ```console
-export ORG_USERNAME="$(node -pe 'JSON.parse(fs.readFileSync(0, "utf8")).result.username' < <(sfdx force:org:display -u my-target-org --json))"
-sfdx force source deploy -p "force-app/main/default/portals/Customer Portal.portal-meta.xml" -u my-target-org
+export ORG_USERNAME="$(node -pe 'JSON.parse(fs.readFileSync(0, "utf8")).result.username' < <(sf org display --target-org my-target-org --json))"
+sf project deploy start --source-dir "force-app/main/default/portals/Customer Portal.portal-meta.xml" --target-org my-target-org
 ```
 
 Although this works just fine, we need to remember to set this environment variable before deploying or pushing.
@@ -44,17 +38,17 @@ Although this works just fine, we need to remember to set this environment varia
 >
 > For common things like username, email address, org id, it would be handy to have these environment variables with target specific values built-in.
 >
-> And this is exactly what this sfdx plugin does!
+> And this is exactly what this sf plugin does!
 
 ## Installation
 
 ```console
-sfdx plugins install sfdx-predeploy-hook-org-env
+sf plugins install sfdx-predeploy-hook-org-env
 ```
 
 ## Usage
 
-Once you've installed this sfdx plugin, you can immediately use the following environment variables mentioned for the Metadata String Replacements:
+Once you've installed this sf plugin, you can immediately use the following environment variables mentioned for the Metadata String Replacements:
 
 | Environment Variable               | Description                             | Example              |
 | ---------------------------------- | --------------------------------------- | -------------------- |
@@ -98,16 +92,16 @@ Make sure your `sfdx-project.json` contains some `replacements` using one of the
       "replaceWithEnv": "SFDX_TARGET_ORG_USER_EMAIL"
     }
   ],
-  "sourceApiVersion": "57.0"
+  "sourceApiVersion": "62.0"
 }
 ```
 
-Now you can run `sfdx force source push` or `sfdx force source deploy` and the Metadata replacement will automatically use the dynamically generated environment variables for the given target org:
+Now you can run `sf project deploy start` and the Metadata replacement will automatically use the dynamically generated environment variables for the given target org:
 
 ```console
-sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org1
-sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org2
-sfdx force source deploy -p "Portal:Customer Portal" -u my-target-org3
+sf project deploy start -m "Portal:Customer Portal" --target-org my-target-org1
+sf project deploy start -m "Portal:Customer Portal" --target-org my-target-org2
+sf project deploy start -m "Portal:Customer Portal" --target-org my-target-org3
 ```
 
 ## Debugging
@@ -119,27 +113,27 @@ To preview the environment variables, set the environment variable `DEBUG` to `*
 MacOS/Linux:
 
 ```console
-$ DEBUG="*:sfdx-predeploy-hook-org-env:*" sfdx force source deploy --checkonly -u mytargetorg -p force-app
+$ DEBUG="*:sfdx-predeploy-hook-org-env:*" sf project deploy start --source-dir force-app --dry-run --target-org mytargetorg
 ```
 
 Windows PowerShell:
 
 ```powershell
 $env:DEBUG="*:sfdx-predeploy-hook-org-env:*"
-sfdx force source deploy --checkonly -u mytargetorg -p force-app
+sf project deploy start --source-dir force-app --dry-run --target-org mytargetorg
 ```
 
 This will output something like:
 
 ```
 ...
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy Setting environment variables for target org +2s
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_ID="00D7g0000006RKmEAM"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USERNAME="john.doe@example.com"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_ID="0058F000002RfcKQAS"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_EMAIL="john.doe@gmail.com"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_FIRSTNAME="John"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_LASTNAME="Doe"
-sfdx:sfdx-predeploy-hook-org-env:hooks:predeploy SFDX_TARGET_ORG_USER_DISPLAYNAME="John Doe" +0ms
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun Setting environment variables for target org
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun SFDX_TARGET_ORG_ID="00D7g0000006RKmEAM"
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun SFDX_TARGET_ORG_USERNAME="john.doe@example.com"
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun SFDX_TARGET_ORG_USER_ID="0058F000002RfcKQAS"
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun SFDX_TARGET_ORG_USER_EMAIL="john.doe@gmail.com"
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun SFDX_TARGET_ORG_USER_FIRSTNAME="John"
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun SFDX_TARGET_ORG_USER_LASTNAME="Doe"
+sf:oclif:sfdx-predeploy-hook-org-env:hooks:prerun SFDX_TARGET_ORG_USER_DISPLAYNAME="John Doe"
 ...
 ```
