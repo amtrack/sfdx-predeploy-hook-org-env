@@ -21,14 +21,14 @@ jobs:
           node-version-file: .node-version
       - name: Install dependencies
         run: |
-          yarn install
-          yarn global add @salesforce/cli
+          npm ci
+          npm install --global @salesforce/cli
       - name: Run E2E test
         env:
           SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
         run: |
           sfdx org login sfdx-url -s -f <(echo "${SFDX_AUTH_URL}")
-          yarn run test:e2e
+          npm run test:e2e
       - name: Release package
         run: npx semantic-release
         env:
