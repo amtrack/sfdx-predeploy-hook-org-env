@@ -26,8 +26,5 @@
   },
   "dependencies": {
     "@salesforce/sf-plugins-core": "12.2.4"
-  },
-  "publishConfig": {
-    "provenance": true
   }
 }
