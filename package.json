@@ -25,6 +25,6 @@
     }
   },
   "dependencies": {
-    "@salesforce/sf-plugins-core": "12.2.4"
+    "@salesforce/sf-plugins-core": "12.2.6"
   }
 }
