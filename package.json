@@ -9,7 +9,10 @@
     "sfdx-hook",
     "hook"
   ],
-  "repository": "amtrack/sfdx-predeploy-hook-org-env",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amtrack/sfdx-predeploy-hook-org-env.git"
+  },
   "license": "MIT",
   "files": [
     "/src",
