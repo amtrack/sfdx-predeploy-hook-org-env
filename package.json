@@ -16,7 +16,8 @@
     "/oclif.manifest.json"
   ],
   "scripts": {
-    "test:e2e": "bash scripts/test-e2e.sh"
+    "test:e2e": "bash scripts/test-e2e.sh",
+    "prepublishOnly": "npx --yes oclif manifest"
   },
   "oclif": {
     "bin": "sf",
